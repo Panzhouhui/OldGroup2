@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.itsv.dao.JiGouDao">
+
+    <insert id="addJiGou" parameterType="JiGou">
+        insert into t_jigou(NAME,SHEN_NAME,SHEN_SEX,SHEN_BRITHDAY,SHEN_TEL,ADDRESS,FD_NAME,FD_TEL,MIANJI,USEDMIANJI,XINGSHI,CHUANGWEI,FQDW_NAME,ZUDATE,TOUZONG,XINGZHI,ZHUCEZIJIN,SHOUFEI,BEIZHU)
+        values(#{name},#{shen_name},#{shen_sex},#{shen_brithday},#{shen_tel},#{address},#{fd_name},#{fd_tel},#{mianji},#{usedmianji},#{xingshi},#{chuangwei},#{fqdw_name},#{zudate},#{touzong},#{xingzhi},#{zhucezijin},#{shoufei},#{beizhu})
+    </insert>
+
+    <resultMap id="JiGouMap" type="JiGou">
+        <result property="name" column="NAME"/>
+		<result property="shen_name" column="SHEN_NAME"/>
+		<result property="shen_sex" column="SHEN_SEX"/>
+		<result property="shen_brithday" column="SHEN_BRITHDAY"/>
+		<result property="shen_tel" column="SHEN_TEL"/>
+		<result property="address" column="ADDRESS"/>
+		<result property="fd_name" column="FD_NAME"/>
+		<result property="fd_tel" column="FD_TEL"/>
+		<result property="jg_name" column="JG_NAME"/>
+		<result property="jg_tel" column="JG_TEL"/>
+		<result property="mianji" column="MIANJI"/>
+		<result property="usedmianji" column="USEDMIANJI"/>
+		<result property="xingshi" column="XINGSHI"/>
+		<result property="chuangwei" column="CHUANGWEI"/>
+		<result property="fqdw_name" column="FQDW_NAME"/>
+		<result property="zudate" column="ZUDATE"/>
+		<result property="touzong" column="TOUZONG"/>
+		<result property="xingzhi" column="XINGZHI"/>
+		<result property="zhucezijin" column="ZHUCEZIJIN"/>
+		<result property="shoufei" column="SHOUFEI"/>
+		<result property="beizhu" column="BEIZHU" />
+    </resultMap>
+
+    <select id="getJiGouList" resultMap="JiGouMap" parameterType="JiGou">
+        select name,address,usedmianji,chuangwei,shoufei from t_jigou
+        <where>
+            <if test="name !=null and name!=''"> name like concat('%',#{name},'%')</if>
+            <if test="address!=null and address!=''">and address like concat('%',#{address},'%')</if>
+            <if test="minusedmianji !=null">and usedmianji &lt; #{minusedmianji}</if>
+			<if test="maxusedmianji !=null">and usedmianji &gt; #{maxusedmianji}</if>
+            <if test="minchuangwei !=null">and chuangwei &lt; #{minchuangwei} </if>
+			<if test="maxchuangwei !=null">and chuangwei &gt; #{maxchuangwei} </if>
+        </where>
+    </select>
+    
+    <update id="updateJiGouById" parameterType="JiGou">
+    	update t_jigou set name=#{name},shen_name=#{shen_name},shen_sex=#{shen_sex},
+    	shen_brithday=#{shen_brithday},shen_tel=#{shen_tel},address=#{address},fd_name=#{fd_name},
+    	fd_tel=#{fd_tel},mianji=#{mianji},usedmianji=#{usedmianji},xingshi=#{xingshi},chuangwei=#{chuangwei},
+    	fqdw_name=#{fqdw_name},zudate=#{zudate},touzong=#{touzong},xingzhi=#{xingzhi},zhucezijin=#{zhucezijin},
+    	shoufei=#{shoufei},beizhu=#{beizhu}
+    	where id=#{id}
+    </update>
+    
+    <delete id="deleteJiGouById">
+    	delete from t_jigou where id=#{id}
+    </delete>
+    
+</mapper>
+    
